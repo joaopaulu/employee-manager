@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
 
   constructor(private employeeService: EmployeeService) {}
 
+  // tslint:disable-next-line: typedef
   ngOnInit() {
     this.getEmployees();
   }
@@ -37,9 +38,11 @@ export class AppComponent implements OnInit {
       (response: Employee) => {
         console.log(response);
         this.getEmployees();
+        addForm.reset();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
+        addForm.reset();
       }
     );
   }
