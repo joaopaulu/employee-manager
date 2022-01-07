@@ -3,6 +3,7 @@ package tech.getarrays.employeemanager.controller;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.getarrays.employeemanager.exception.EntidadeNaoEncontradaException;
 import tech.getarrays.employeemanager.exception.NegocioException;
@@ -14,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/employee")
-@CrossOrigin("*")
 public class EmployeeController {
 
     @Autowired
@@ -43,18 +43,10 @@ public class EmployeeController {
         }
     }
 
-    @PutMapping("/{employeeId}")
-    public Employee atualizar(@PathVariable Long employeeId,
-                            @RequestBody Employee employee) {
-        Employee employeeAtual = employeeService.buscarOuFalhar(employeeId);
-
-        BeanUtils.copyProperties(employee, employeeAtual, "id");
-
-        try {
-            return employeeService.salvar(employeeAtual);
-        } catch (EntidadeNaoEncontradaException e) {
-            throw new NegocioException(e.getMessage());
-        }
+    @PutMapping("/update")
+    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) {
+        Employee updateEmployee = employeeService.atualizar(employee);
+        return new ResponseEntity<>(updateEmployee, HttpStatus.OK);
     }
 
     @DeleteMapping("/{employeeId}")
