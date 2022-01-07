@@ -1,17 +1,19 @@
 package tech.getarrays.employeemanager.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Employee implements Serializable {
 
-    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
@@ -24,4 +26,17 @@ public class Employee implements Serializable {
     private String imageUrl;
     @Column(nullable = false, updatable = false)
     private String employeeCode;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Employee employee = (Employee) o;
+        return id != null && Objects.equals(id, employee.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

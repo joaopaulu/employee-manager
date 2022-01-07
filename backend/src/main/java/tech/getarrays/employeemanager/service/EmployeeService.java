@@ -1,10 +1,8 @@
 package tech.getarrays.employeemanager.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import tech.getarrays.employeemanager.exception.EntidadeEmUsoException;
 import tech.getarrays.employeemanager.exception.EntidadeNaoEncontradaException;
 import tech.getarrays.employeemanager.model.Employee;
 import tech.getarrays.employeemanager.repository.EmployeeRepository;
@@ -12,7 +10,7 @@ import tech.getarrays.employeemanager.repository.EmployeeRepository;
 @Service
 public class EmployeeService {
 
-    private String MSG_EMPLOYEE_NOT_FOND
+    private final String MSG_EMPLOYEE_NOT_FOND
             = "Não existe um cadastro de employee com o código %d";
 
     @Autowired
